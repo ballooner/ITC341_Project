@@ -1,4 +1,4 @@
-package SpotifyAPI;
+package SpotifyAPIWrapper;
 
 import java.io.IOException;
 import java.net.ProxySelector;

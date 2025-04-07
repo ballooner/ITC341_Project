@@ -1,4 +1,4 @@
-package SpotifyAPI;
+package SpotifyAPIWrapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
