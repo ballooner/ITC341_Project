@@ -1,5 +1,7 @@
 package SpotifyAPIWrapper;
 
+import CSV.CSVBuilder;
+import Parsing.JSONParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,8 +12,13 @@ public class SpotifyAPIMain {
 
         spotifyAPI.requestToken(System.getenv("SpotifySecret"));
 
-
         JSONObject request = spotifyAPI.getArtist("0nmQIMXWTXfhgOBdNzhGOs");
-        System.out.println(request.get("name"));
+
+        JSONParser parser = new JSONParser();
+        String artistInfo = parser.parseArtistInfo(request);
+        String artistGenre = parser.parseArtistGenre(request);
+
+        CSVBuilder.appendToArtists(artistInfo);
+        CSVBuilder.appendToGenre(artistGenre);
     }
 }
