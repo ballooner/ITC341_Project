@@ -105,9 +105,24 @@ public class SpotifyAPI {
      * @param offset		The index of the first item, where 0 is the first item
      * @return				A JSONObject containing a Spotify API response
      */
-    public JSONObject getArtistAlbums(String artistID, int limit, int offset) {
+    public JSONObject getArtistAlbums(String artistID, int limit, int offset) throws URISyntaxException, IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://api.spotify.com/v1/artists/" + artistID + "/albums?offset="
+                + offset + "&" + "limit=" + limit))
+                .header("Authorization", "Bearer " + accessToken)
+                .GET()
+                .build();
 
-        return null;
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request, BodyHandlers.ofString());
+
+        String responseBody = response.body();
+        JSONObject obj = new JSONObject(responseBody);
+
+        return obj;
     }
 
 

@@ -28,4 +28,19 @@ public class JSONParser {
 
         return sb.toString();
     }
+
+    public String parseArtistAlbums(JSONObject albumObject) {
+        StringBuilder sb = new StringBuilder();
+        JSONArray albums = albumObject.getJSONArray("items");
+
+        JSONObject album;
+        for (int i = 0; i < albums.length(); i++) {
+            album = albums.getJSONObject(i);
+            sb.append(String.join(",", album.getString("id"), album.getString("name"),
+                    Integer.toString(album.getInt("total_tracks"))));
+            sb.append(System.lineSeparator());
+        }
+
+        return sb.toString();
+    }
 }

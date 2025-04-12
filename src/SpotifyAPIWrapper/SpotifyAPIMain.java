@@ -16,9 +16,13 @@ public class SpotifyAPIMain {
 
         JSONParser parser = new JSONParser();
         String artistInfo = parser.parseArtistInfo(request);
-        String artistGenre = parser.parseArtistGenre(request);
-
         CSVBuilder.appendToArtists(artistInfo);
+
+        String artistGenre = parser.parseArtistGenre(request);
         CSVBuilder.appendToGenre(artistGenre);
+
+        JSONObject albumRequest = spotifyAPI.getArtistAlbums("0nmQIMXWTXfhgOBdNzhGOs", 20, 0);
+        String albums = parser.parseArtistAlbums(albumRequest);
+        CSVBuilder.appendToAlbums(albums);
     }
 }

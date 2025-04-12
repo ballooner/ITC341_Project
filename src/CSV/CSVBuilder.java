@@ -27,4 +27,14 @@ public class CSVBuilder {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    public static void appendToAlbums(String albums) {
+        String path = new File("csv files/albums.csv").getAbsolutePath();
+        try (FileWriter fw = new FileWriter(path, true)) {
+            fw.write(albums + System.lineSeparator());
+            System.out.println("Data appended");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }
