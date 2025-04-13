@@ -28,9 +28,6 @@ public class SpotifyAPI {
 
     /**
      * Requests an access token from the Spotify API and stores it in a class variable
-     * @throws URISyntaxException
-     * @throws IOException
-     * @throws InterruptedException
      */
     public void requestToken(String clientSecret) throws URISyntaxException, IOException, InterruptedException{
         String postBody = String.format("grant_type=client_credentials&client_id=%s&client_secret=%s", clientID, System.getenv("SpotifySecret"));
@@ -62,12 +59,8 @@ public class SpotifyAPI {
      * Call and return Spotify's Get Artist endpoint response
      * @param artistID		The Spotify ID of the Artist
      * @return				A JSONObject containing a Spotify API response
-     * @throws JSONException
-     * @throws InterruptedException
-     * @throws IOException
-     * @throws URISyntaxException
      */
-    public JSONObject getArtist(String artistID) throws JSONException, IOException, InterruptedException, URISyntaxException {
+    public JSONObject getArtist(String artistID) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI("https://api.spotify.com/v1/artists/" + artistID))
                 .header("Authorization", "Bearer " + accessToken)
@@ -80,10 +73,7 @@ public class SpotifyAPI {
                 .build()
                 .send(request, BodyHandlers.ofString());
 
-        String responseBody = response.body();
-        JSONObject obj = new JSONObject(responseBody);
-
-        return obj;
+        return new JSONObject(response.body());
     }
 
 
@@ -92,9 +82,30 @@ public class SpotifyAPI {
      * @param artistIDs		A String array containing the Spotify artist IDs to request
      * @return				A JSONObject containing a Spotify API response
      */
-    public JSONObject getSeveralArtist(String [] artistIDs) {
+    public JSONObject getSeveralArtist(String[] artistIDs) throws URISyntaxException, IOException, InterruptedException {
+        StringBuilder idListBuilder = new StringBuilder();
+        idListBuilder.append(artistIDs[0]);
 
-        return null;
+        for (int i = 1; i < artistIDs.length; i++)
+        {
+            idListBuilder.append(",").append(artistIDs[i]);
+        }
+
+        String ids = idListBuilder.toString();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://api.spotify.com/v1/artists?ids=" + ids))
+                .header("Authorization", "Bearer " + accessToken)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request, BodyHandlers.ofString());
+
+        return new JSONObject(response.body());
     }
 
 
@@ -133,9 +144,21 @@ public class SpotifyAPI {
      * @param offset 		The index of the first item where 0 is the first
      * @return 				A JSONObject containing a Spotify API response
      */
-    public JSONObject getAlbumTracks(String albumID, int limit, int offset) {
+    public JSONObject getAlbumTracks(String albumID, int limit, int offset) throws URISyntaxException, IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://api.spotify.com/v1/albums/" + albumID + "/tracks?offset="
+                        + offset + "&" + "limit=" + limit))
+                .header("Authorization", "Bearer " + accessToken)
+                .GET()
+                .build();
 
-        return null;
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request, BodyHandlers.ofString());
+
+        return new JSONObject(response.body());
     }
 
 
@@ -144,9 +167,20 @@ public class SpotifyAPI {
      * @param trackID 		The Spotify ID of the track
      * @return 				A JSONObject containing a Spotify API response
      */
-    public JSONObject getTrack(String trackID) {
+    public JSONObject getTrack(String trackID) throws URISyntaxException, IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://api.spotify.com/v1/tracks/" + trackID))
+                .header("Authorization", "Bearer " + accessToken)
+                .GET()
+                .build();
 
-        return null;
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request, BodyHandlers.ofString());
+
+        return new JSONObject(response.body());
     }
 
 
@@ -155,8 +189,29 @@ public class SpotifyAPI {
      * @param trackIDs 		A String array containing the Spotify track IDs to request
      * @return 				A JSONObject containing a Spotify API response
      */
-    public JSONObject getSeveralTracks(String[] trackIDs) {
+    public JSONObject getSeveralTracks(String[] trackIDs) throws URISyntaxException, IOException, InterruptedException {
+        StringBuilder idListBuilder = new StringBuilder();
+        idListBuilder.append(trackIDs[0]);
 
-        return null;
+        for (int i = 1; i < trackIDs.length; i++)
+        {
+            idListBuilder.append(",").append(trackIDs[i]);
+        }
+
+        String ids = idListBuilder.toString();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://api.spotify.com/v1/tracks?ids=" + ids))
+                .header("Authorization", "Bearer " + accessToken)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request, BodyHandlers.ofString());
+
+        return new JSONObject(response.body());
     }
 }

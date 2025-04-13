@@ -13,7 +13,9 @@ public class SpotifyAPIMain {
         spotifyAPI.requestToken(System.getenv("SpotifySecret"));
 
         JSONObject request = spotifyAPI.getArtist("0nmQIMXWTXfhgOBdNzhGOs");
-
+        //String[] idArr = {"0nmQIMXWTXfhgOBdNzhGOs", "2yEwvVSSSUkcLeSTNyHKh8"};
+        System.out.println(spotifyAPI.getTrack("4KyghCEewQOSZ4OdvQwFN3"));
+        /**
         JSONParser parser = new JSONParser();
         String artistInfo = parser.parseArtistInfo(request);
         CSVBuilder.appendToArtists(artistInfo);
@@ -24,5 +26,6 @@ public class SpotifyAPIMain {
         JSONObject albumRequest = spotifyAPI.getArtistAlbums("0nmQIMXWTXfhgOBdNzhGOs", 20, 0);
         String albums = parser.parseArtistAlbums(albumRequest);
         CSVBuilder.appendToAlbums(albums);
+         **/
     }
 }
