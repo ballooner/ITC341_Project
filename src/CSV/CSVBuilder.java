@@ -37,4 +37,44 @@ public class CSVBuilder {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    public static void appendToTracks(String tracks) {
+        String path = new File("csv files/tracks.csv").getAbsolutePath();
+        try (FileWriter fw = new FileWriter(path, true)) {
+            fw.write(tracks + System.lineSeparator());
+            System.out.println("Data appended");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static void appendToAlbumArtist(String album_artist) {
+        String path = new File("csv files/album_artist.csv").getAbsolutePath();
+        try (FileWriter fw = new FileWriter(path, true)) {
+            fw.write(album_artist + System.lineSeparator());
+            System.out.println("Data appended");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static void appendToTrackArtist(String track_artist) {
+        String path = new File("csv files/track_artist.csv").getAbsolutePath();
+        try (FileWriter fw = new FileWriter(path, true)) {
+            fw.write(track_artist + System.lineSeparator());
+            System.out.println("Data appended");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static void appendToTrackOnAlbum(String track_album) {
+        String path = new File("csv files/track_album.csv").getAbsolutePath();
+        try (FileWriter fw = new FileWriter(path, true)) {
+            fw.write(track_album + System.lineSeparator());
+            System.out.println("Data appended");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }

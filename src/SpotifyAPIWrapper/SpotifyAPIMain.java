@@ -18,12 +18,13 @@ public class SpotifyAPIMain {
         String artistInfo = parser.parseArtistInfo(request);
         CSVBuilder.appendToArtists(artistInfo);
 
-        String artistGenre = parser.parseArtistGenre(request);
-        CSVBuilder.appendToGenre(artistGenre);
-
         JSONObject albumRequest = spotifyAPI.getArtistAlbums("0nmQIMXWTXfhgOBdNzhGOs", 20, 0);
         String albums = parser.parseArtistAlbums(albumRequest);
         CSVBuilder.appendToAlbums(albums);
+
+        JSONObject trackRequest = spotifyAPI.getAlbumTracks("50YNY0xy9uJ0U9eFQBdLJa", 20, 0);
+        String tracks = parser.parseAlbumTracks("50YNY0xy9uJ0U9eFQBdLJa", trackRequest);
+        CSVBuilder.appendToTracks(tracks);
 
     }
 }
