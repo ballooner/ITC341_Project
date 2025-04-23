@@ -19,7 +19,7 @@ create table artistGenre (
 drop table album cascade constraints;
 create table album (
 	album_id varchar2(25),
-	album_name varchar2(30),
+	album_name varchar2(100),
 	total_tracks number,
 	album_reldate date,
 	constraint album_pk primary key(album_id)
@@ -28,7 +28,7 @@ create table album (
 drop table track cascade constraints;
 create table track (
 	track_id varchar2(25),
-	track_name varchar2(30),
+	track_name varchar2(100),
 	track_length number,
 	constraint track_pk primary key(track_id)
 );
